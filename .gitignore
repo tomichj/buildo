@@ -1,0 +1,25 @@
+!.keep
+*.DS_Store
+*.swo
+*.swp
+.byebug_history
+/.bundle
+/.env.local
+/coverage/*
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/log/*
+/node_modules
+/pkg/
+/public/assets
+/public/packs
+/public/system
+/spec/reports/
+/tags
+/tmp/*
+/.yardoc
+/_yardoc/
+/yarn-error.log
+
+# rspec failure tracking
+.rspec_status
