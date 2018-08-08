@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    buildo (0.1.2)
+    buildo (0.1.3)
       rails (~> 5.2.0)
 
 GEM
@@ -137,4 +137,4 @@ DEPENDENCIES
   rspec (~> 3.2)
 
 BUNDLED WITH
-   1.16.1
+   1.16.2

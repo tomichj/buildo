@@ -1,16 +1,17 @@
-require 'forwardable'
-
 module Buildo
   class AppBuilder < Rails::AppBuilder
     include Buildo::Helpers
-    extend Forwardable
+
+    def readme
+      template 'README.md.erb', 'README.md'
+    end
 
     def gitignore
-      copy_file "buildo_gitignore", ".gitignore"
+      copy_file 'buildo_gitignore', '.gitignore'
     end
 
     def gemfile
-      template "Gemfile.erb", "Gemfile"
+      template 'Gemfile.erb', 'Gemfile'
     end
 
     def ruby_version
@@ -18,30 +19,27 @@ module Buildo
     end
 
 
-
-
-
-
     ######################################################
     # Development Environment
     def configure_local_mail
-      copy_file "email.rb", "config/initializers/email.rb"
+      copy_file 'email.rb', 'config/initializers/email.rb'
     end
 
     def raise_on_missing_assets_in_test
-      configure_environment "test", "config.assets.raise_runtime_errors = true"
+      configure_environment 'test', 'config.assets.raise_runtime_errors = true'
     end
 
     def raise_on_delivery_errors
       replace_in_file 'config/environments/development.rb',
-                      'raise_delivery_errors = false', 'raise_delivery_errors = true'
+                      'raise_delivery_errors = false',
+                      'raise_delivery_errors = true'
     end
 
     def set_test_delivery_method
       inject_into_file(
-        "config/environments/development.rb",
+        'config/environments/development.rb',
         "\n  config.action_mailer.delivery_method = :file",
-        after: "config.action_mailer.raise_delivery_errors = true",
+        after: 'config.action_mailer.raise_delivery_errors = true',
         )
     end
 
@@ -50,12 +48,12 @@ module Buildo
     config.action_controller.action_on_unpermitted_parameters = :raise
       RUBY
 
-      inject_into_class "config/application.rb", "Application", config
+      inject_into_class 'config/application.rb', 'Application', config
     end
 
     def provide_setup_script
-      template "bin_setup", "bin/setup", force: true
-      run "chmod a+x bin/setup"
+      template 'bin_setup', 'bin/setup', force: true
+      run 'chmod a+x bin/setup'
     end
 
     def configure_generators
@@ -77,8 +75,8 @@ module Buildo
     end
 
     def configure_i18n_for_missing_translations
-      raise_on_missing_translations_in("development")
-      raise_on_missing_translations_in("test")
+      raise_on_missing_translations_in('development')
+      raise_on_missing_translations_in('test')
     end
 
     def configure_quiet_assets
@@ -86,15 +84,8 @@ module Buildo
     config.assets.quiet = true
       RUBY
 
-      inject_into_class "config/application.rb", "Application", config
+      inject_into_class 'config/application.rb', 'Application', config
     end
-
-
-
-
-
-
-
 
 
     ##################################################
@@ -115,13 +106,6 @@ module Buildo
     def enable_rack_deflater
       configure_environment 'production', 'config.middleware.use Rack::Deflater'
     end
-
-
-
-
-
-
-
 
 
     ######################################################
@@ -182,15 +166,8 @@ end
     end
 
     def setup_rack_mini_profiler
-      copy_file("rack_mini_profiler.rb", "config/initializers/rack_mini_profiler.rb", )
+      copy_file('rack_mini_profiler.rb', 'config/initializers/rack_mini_profiler.rb', )
     end
-
-
-
-
-
-
-
 
 
     ##########################################################
@@ -204,31 +181,77 @@ end
     end
 
 
+    ###########################################################
+    # Extras
+    def set_up_env
+      copy_file 'buildo_env', '.env'
+    end
+
+    def copy_miscellaneous_files
+      copy_file 'errors.rb', 'config/initializers/errors.rb'
+      copy_file 'json_encoding.rb', 'config/initializers/json_encoding.rb'
+    end
+
+    def customize_error_pages
+      meta_tags =<<-EOS
+  <meta charset="utf-8" />
+  <meta name="ROBOTS" content="NOODP" />
+  <meta name="viewport" content="initial-scale=1" />
+      EOS
+
+      %w(500 404 422).each do |page|
+        path = "public/#{page}.html"
+        if File.exist?(path)
+          inject_into_file path, meta_tags, after: "<head>\n"
+          replace_in_file path, /<!--.+-->\n/, ''
+        end
+      end
+    end
+
+    def setup_spring
+      bundle_command 'exec spring binstub --all'
+    end
 
 
+    ###############################################################
+    # Local heroku setup
+    def create_review_apps_setup_script
+      template(
+        'heroku/bin_setup_review_app.erb',
+        'bin/setup_review_app',
+        force: true,
+        )
+      run 'chmod a+x bin/setup_review_app'
+    end
+
+    def create_deploy_script
+      copy_file 'heroku/bin_deploy', 'bin/deploy'
+
+      instructions = <<-MARKDOWN
+
+## Deploying
+
+If you have previously run the `./bin/setup` script,
+you can deploy to staging and production with:
+
+    % ./bin/deploy staging
+    % ./bin/deploy production
+      MARKDOWN
+
+      append_to_file 'README.md', instructions
+      run 'chmod a+x bin/deploy'
+    end
+
+    def create_heroku_application_manifest_file
+      template 'heroku/app.json.erb', 'app.json'
+    end
 
 
+    ################################################################
+    # Github
     def create_github_repo(repo_name)
       run "hub create #{repo_name}"
     end
-
-
-
-
-
-
-    def configure_action_mailer_in_specs
-      copy_file 'action_mailer.rb', 'spec/support/action_mailer.rb'
-    end
-
-
-
-
-    def set_up_env
-      copy_file 'dotfiles/.env', 'env'
-    end
-
-
 
     private
 
@@ -238,5 +261,8 @@ end
       uncomment_lines("config/environments/#{environment}.rb", config)
     end
 
+    # def heroku_adapter
+    #   @heroku_adapter ||= Adapters::Heroku.new(self)
+    # end
   end
 end
