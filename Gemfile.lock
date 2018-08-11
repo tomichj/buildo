@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    buildo (0.1.3)
-      rails (~> 5.2.0)
+    buildo (0.1.4)
+      rails (~> 5)
 
 GEM
   remote: https://rubygems.org/

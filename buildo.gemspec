@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Justin Tomich']
   spec.email         = ['tomichj@gmail.com']
 
-  spec.summary       = 'Generate a rails app with all the fixins'
-  spec.description   = 'Generate a rails app with all the fixins'
-  spec.homepage      = 'http://github.com/tomichh/buildo'
+  spec.summary       = 'Set up oath authentication, some user services, and scaffolding'
+  spec.description   = 'Set up oath authentication, some user services, and scaffolding'
+  spec.homepage      = 'http://github.com/tomichj/buildo'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split("\n")
@@ -19,8 +19,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.extra_rdoc_files = %w[README.md LICENSE.txt]
 
-  spec.required_ruby_version = ">= #{Buildo::RUBY_VERSION}"
-
-  spec.add_dependency 'rails', Buildo::RAILS_VERSION
+  spec.add_dependency 'rails', '~> 5'
   spec.add_development_dependency 'rspec', '~> 3.2'
 end

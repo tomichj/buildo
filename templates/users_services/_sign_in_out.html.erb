@@ -1,0 +1,8 @@
+<div>
+<% if signed_in? %>
+  <%= link_to 'sign out', sign_out_path %>
+<% else %>
+  <%= link_to 'sign in', sign_in_path %>
+  <%= link_to 'Sign up', sign_up_path %>
+<% end %>
+</div>
