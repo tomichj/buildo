@@ -6,14 +6,16 @@ This is the first release of buildo, and it doesn't do a ton yet.
 Buildo sets up Oath and Oath Lockdown for authentication, installs some scaffolding to set up
 authentication, adds a User model, and a collection of gems to assist in app development. 
 
-Buildo assumes you just build your app with Thoughtbot's [Suspenders](https://github.com/thoughtbot/suspenders).
-Do that first, then install buildo and run it.
+Buildo assumes you just built your app with Thoughtbot's [Suspenders](https://github.com/thoughtbot/suspenders).
+It's not strictly necessary, but buildo assumes some Suspenders-based conventions are in effect: 
+e.g. that you have `app/views/application`.
 
-If your user model won't be named `User`, these generators are going to cause you trouble.
+If your user model won't be named `User`, these generators won't work out of the box for you. They'll 
+generate migrations targeting `User`: you'll have to modify them by hand.
 
 ## Installation
 
-Add buildo to your gemfile:
+Add buildo to your Gemfile:
 
     gem 'buildo', group: :development
 
@@ -21,6 +23,9 @@ and `bundle install`.
 
 
 ## Generators
+
+Buildo offers a number of generators. You can run any individual generator listed below,
+or run them all (minus heroku) in one go with the `all` generator.
 
 ### App Base Generator
 
@@ -42,7 +47,7 @@ Installs:
 Installs:
 * [oath-generators](https://github.com/halogenandtoast/oath-generators) generators for the oath authentication library
 
-Runs the oath generator scaffolding, which installs:
+Runs the oath generators scaffolding, which installs:
 * a User model with email and password digest
 * session and user controllers, routes, views to support sign up and sign in
 * injects oath's helpers into application_controller.r
@@ -56,17 +61,16 @@ Buildo's scaffolding the installs over this:
 
 Run `rails db:migrate` after this. 
 
-
 ### Auth Generator*
 
-Install oath and oath-lockdown. You should have a User model in place before you run this generator.
-__If your user model is named something other than User__, you'll need to edit the migrations from this
-generator.
-
-    rails generate buildo:auth
+Installs:
 
 * [oath](https://github.com/halogenandtoast/oath) rails authentication toolkit
 * [oath-lockdown](https://github.com/tomichj/oath-lockdown) An authentication system for Rails built on Oath.
+
+You should have a User model in place before you run this generator.
+
+    rails generate buildo:auth
 
 
 ### Users Services
