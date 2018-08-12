@@ -5,7 +5,6 @@ module Buildo
     def add_gems
       gem 'user_naming'
       gem 'user_time_zones'
-      gem 'local_time'
       Bundler.with_clean_env { run 'bundle install' }
     end
 
@@ -17,20 +16,6 @@ module Buildo
       generate 'user_time_zones:install -j'
     end
 
-    def install_local_time_javascript
-      return unless File.exist?(js_assets)
-      append_to_file js_assets, '//= require local-time'
-    end
-
-    private
-
-    def js_assets
-      'app/assets/javascripts/application.js'
-    end
-
-    def js_partial
-      'app/views/application/_javascript.html.erb'
-    end
   end
 end
 
