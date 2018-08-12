@@ -2,6 +2,13 @@ require 'rails/generators'
 
 module Buildo
   class UsersServicesGenerator < Rails::Generators::Base
+    def verify
+      unless File.exist? 'app/models/user.rb'
+        puts 'Exiting: you do not have a User model at app/models/User.rb.'
+        exit 1
+      end
+    end
+
     def add_gems
       gem 'user_naming'
       gem 'user_time_zones'

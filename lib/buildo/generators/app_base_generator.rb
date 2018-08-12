@@ -1,8 +1,9 @@
 require 'rails/generators'
 
 module Buildo
-  class AppHelpersGenerator < Rails::Generators::Base
+  class AppBaseGenerator < Rails::Generators::Base
     def add_gems
+      say 'Installing base application gems'
       gem 'operate'
       gem 'slim-rails'
       gem 'aasm'

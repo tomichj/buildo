@@ -13,7 +13,7 @@ module Buildo
     end
 
     def generate_oath_scaffolds
-      say 'Generating user model, and authorization scaffolding.'
+      say 'Generating user model and authorization scaffolding.'
       generate 'oath:scaffold'
     end
 
@@ -41,9 +41,10 @@ module Buildo
     end
 
     def add_partial
+      return unless File.exist?('app/views/application')
+
       say 'Added partial with sign in, sign out, and sign up links.'
       say 'You can add it to your layout.'
-      return unless File.exist?('app/views/application')
       copy_file '_sign_in_out.html.erb',
                 'app/views/application/_sign_in_out.html.erb'
     end
