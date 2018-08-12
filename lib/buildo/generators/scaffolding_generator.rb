@@ -48,11 +48,5 @@ module Buildo
                 'app/views/application/_sign_in_out.html.erb'
     end
 
-    def outro
-      instructions <<-EOS
-
-      EOS
-      say instructions
-    end
   end
 end
