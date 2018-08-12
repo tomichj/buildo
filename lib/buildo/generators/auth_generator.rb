@@ -12,5 +12,9 @@ module Buildo
     def install_oath_lockdown
       generate 'oath:lockdown:install'
     end
+
+    def outro
+      say 'Be sure to `rails db:migrate` after this generator runs.'
+    end
   end
 end

@@ -49,5 +49,8 @@ module Buildo
                 'app/views/application/_sign_in_out.html.erb'
     end
 
+    def outro
+      say 'Be sure to `rails db:migrate` after this generator runs.'
+    end
   end
 end
