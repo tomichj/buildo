@@ -11,6 +11,14 @@ Do that first, then install buildo and run it.
 
 If your user model won't be named `User`, these generators are going to cause you trouble.
 
+## Installation
+
+Add buildo to your gemfile:
+
+    gem 'buildo', group: :development
+
+and `bundle install`.
+
 
 ## Generators
 
@@ -71,9 +79,41 @@ Installs:
 Both gems generate migrations. Run `rails db:migrate` after this.
 
 
+### Heroku
+
+You can create Heroku staging and production apps:
+
+    rails generate heroku
+
+This:
+
+* Creates a staging and production Heroku app
+* Sets them as `staging` and `production` Git remotes
+* Creates a [Heroku Pipeline] for review apps
+* Schedules automated backups for 10AM UTC for both `staging` and `production`
+
+[Heroku Pipeline]: https://devcenter.heroku.com/articles/pipelines
+
+You can optionally specify alternate Heroku flags:
+
+    rails generate heroku \
+      --heroku-flags "--region eu --addons sendgrid,ssl"
+
+See all possible Heroku flags:
+
+    heroku help create
+
+The heroku generator is largely taken from the suspenders project's heroku adapter. Suspenders
+does not offer heroku as a generator, and can only be invoked during initial app generation.
+You can run buildo's heroku generator any time.
+
+
 ### All
 
-Runs all of the above generators. Run `rails db:migrate` after this.
+Runs the `app_base`, `scaffolding`, `auth`, and `user_services` generators.
+Run `rails db:migrate` after this.
+
+Note: Does __not__ run heroku.
 
 
 ## Issues
