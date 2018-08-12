@@ -15,7 +15,6 @@ Gem::Specification.new do |spec|
 
   spec.files         = `git ls-files`.split("\n")
   spec.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  spec.executables   = ['buildo']
   spec.require_paths = ['lib']
   spec.extra_rdoc_files = %w[README.md LICENSE.txt]
 
