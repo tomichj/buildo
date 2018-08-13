@@ -8,8 +8,11 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Justin Tomich']
   spec.email         = ['tomichj@gmail.com']
 
-  spec.summary       = 'Set up oath authentication, some user services, and scaffolding'
-  spec.description   = 'Set up oath authentication, some user services, and scaffolding'
+  spec.summary       = 'A small collection of generators to jump-start building a Rails application'
+  spec.description   = <<~END_OF_LINE
+    A small collection of generators to jump-start building a Rails application. 
+    Set up oath authentication, some user services, and scaffolding.
+  END_OF_LINE
   spec.homepage      = 'http://github.com/tomichj/buildo'
   spec.license       = 'MIT'
 

@@ -1,7 +1,10 @@
 # Buildo
 
 Buildo is a small collection of generators that jump-start building a Rails application. 
-This is the first release of buildo, and it doesn't do a ton yet.
+
+This is the first release of buildo. There might be a substatial changes coming.
+The auth scaffolding in particular will evolve in the near term, as a major Oath
+release is coming.
 
 Buildo sets up Oath and Oath Lockdown for authentication, installs some scaffolding to set up
 authentication, adds a User model, and a collection of gems to assist in app development. 
