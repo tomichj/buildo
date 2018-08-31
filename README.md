@@ -2,16 +2,17 @@
 
 Buildo is a collection of generators that jump-start building a Rails application. 
 
-This is the first release of buildo. It's very usable, but you can expect changes soon.
-The auth scaffolding in particular will evolve in the near term, once the next version
-of Oath (an authentication toolit) is released.
+This is the first release of buildo. The auth generator, in particular, 
+will evolve in the near term, once the next version of Oath 
+(an authentication toolit) is released.
 
-Buildo sets up Oath and Oath Lockdown for authentication, installs some scaffolding 
-to set up authentication screens and controllers, adds a User model, and a collection
-of gems to assist in app development. 
+Buildo sets up Oath, Oath Generators, and Oath Lockdown for authentication, 
+installs some scaffolding to set up authentication screens and controllers, 
+adds a User model, and a collection of gems to assist in app development.
 
-Buildo assumes you just built your app with Thoughtbot's [Suspenders](https://github.com/thoughtbot/suspenders).
-It's not strictly necessary, but buildo assumes some Suspenders-based conventions are in effect: 
+Buildo assumes you just built your app with Thoughtbot's 
+[Suspenders](https://github.com/thoughtbot/suspenders). It's not strictly 
+necessary, but buildo assumes some Suspenders-based conventions are in effect, 
 e.g. that you have `app/views/application`.
 
 Note: buildo generates a `User` model and migrations for you. If your user model will
@@ -32,6 +33,7 @@ and `bundle install`.
 Buildo offers a number of generators. You can run any individual generator listed below,
 or run them all (minus heroku) in one go with the `all` generator.
 
+
 ### App Base Generator
 
 A collection of gems to assist in building your app.
@@ -47,13 +49,16 @@ Installs:
 * [local_time](https://github.com/basecamp/local_time) Rails engine for cache-friendly, client-side local time
 
 
-### Scaffolding Generator
+### Auth Generator
 
 Installs:
+
+* [oath](https://github.com/halogenandtoast/oath) rails authentication toolkit
 * [oath-generators](https://github.com/halogenandtoast/oath-generators) generators for the oath authentication library
+* [oath-lockdown](https://github.com/tomichj/oath-lockdown) An authentication system for Rails built on Oath.
 
 Runs the oath generators scaffolding, which installs:
-* a User model with email and password digest
+* a `User` model with email and password digest
 * session and user controllers, routes, views to support sign up and sign in
 * injects oath's helpers into application_controller.r
 * a minimal config/oath/oath.en.yml
@@ -64,22 +69,11 @@ Buildo's scaffolding then replaces:
 * sign_in, sign_out, sign_up routes
 * a partial for a header with sign_in, sign_out, sign_up links
 
-Run `rails db:migrate` after this. 
-
-
-### Auth Generator
-
-Installs:
-
-* [oath](https://github.com/halogenandtoast/oath) rails authentication toolkit
-* [oath-lockdown](https://github.com/tomichj/oath-lockdown) An authentication system for Rails built on Oath.
-
-You should have a User model in place *before* you run this generator. If this is a new rails app,
-run the scaffolding generator above before you run this generator.
-
 To run this generator:
 
     rails generate buildo:auth
+
+Run `rails db:migrate` after this. 
 
 
 ### Users Services
@@ -127,8 +121,7 @@ generation. You can run buildo's heroku generator any time.
 
 ### All
 
-Runs the `app_base`, `scaffolding`, `auth`, and `user_services` generators.
-Run `rails db:migrate` after this.
+Runs the `app_base`, `auth`, and `user_services` generators. Run `rails db:migrate` after this.
 
 Note: The `all` generator does __not__ run heroku. Run that separately when you're ready.
 
