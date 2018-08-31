@@ -63,7 +63,7 @@ Runs the oath generators scaffolding, which installs:
 * injects oath's helpers into application_controller.r
 * a minimal config/oath/oath.en.yml
 
-Buildo's scaffolding then replaces:
+Buildo's scaffolding then replaces some of oath's scaffolding to support `remember me` and other Oath Lockdown features:
 * session_controller.rb that supports `remember_me` and other oath-lockdown features
 * sessions/new.html.erb that supports `remember_me`
 * sign_in, sign_out, sign_up routes
