@@ -1,20 +1,22 @@
 # Buildo
 
-Buildo is a small collection of generators that jump-start building a Rails application. 
+Buildo is a collection of generators that jump-start building a Rails application. 
 
-This is the first release of buildo. There might be a substatial changes coming.
-The auth scaffolding in particular will evolve in the near term, as a major Oath
-release is coming.
+This is the first release of buildo. It's very usable, but you can expect changes soon.
+The auth scaffolding in particular will evolve in the near term, once the next version
+of Oath (an authentication toolit) is released.
 
-Buildo sets up Oath and Oath Lockdown for authentication, installs some scaffolding to set up
-authentication, adds a User model, and a collection of gems to assist in app development. 
+Buildo sets up Oath and Oath Lockdown for authentication, installs some scaffolding 
+to set up authentication screens and controllers, adds a User model, and a collection
+of gems to assist in app development. 
 
 Buildo assumes you just built your app with Thoughtbot's [Suspenders](https://github.com/thoughtbot/suspenders).
 It's not strictly necessary, but buildo assumes some Suspenders-based conventions are in effect: 
 e.g. that you have `app/views/application`.
 
-If your user model won't be named `User`, these generators won't work out of the box for you. They'll 
-generate migrations targeting `User`: you'll have to modify them by hand.
+Note: buildo generates a `User` model and migrations for you. If your user model will
+be named something different, you'll have to manually migrate it after you run buildo.
+
 
 ## Installation
 
@@ -32,7 +34,7 @@ or run them all (minus heroku) in one go with the `all` generator.
 
 ### App Base Generator
 
-A collection of gems for building the core of your app.
+A collection of gems to assist in building your app.
 
     rails generate buildo:app_base
 
@@ -56,7 +58,7 @@ Runs the oath generators scaffolding, which installs:
 * injects oath's helpers into application_controller.r
 * a minimal config/oath/oath.en.yml
 
-Buildo's scaffolding the installs over this:
+Buildo's scaffolding then replaces:
 * session_controller.rb that supports `remember_me` and other oath-lockdown features
 * sessions/new.html.erb that supports `remember_me`
 * sign_in, sign_out, sign_up routes
@@ -64,14 +66,18 @@ Buildo's scaffolding the installs over this:
 
 Run `rails db:migrate` after this. 
 
-### Auth Generator*
+
+### Auth Generator
 
 Installs:
 
 * [oath](https://github.com/halogenandtoast/oath) rails authentication toolkit
 * [oath-lockdown](https://github.com/tomichj/oath-lockdown) An authentication system for Rails built on Oath.
 
-You should have a User model in place before you run this generator.
+You should have a User model in place *before* you run this generator. If this is a new rails app,
+run the scaffolding generator above before you run this generator.
+
+To run this generator:
 
     rails generate buildo:auth
 
@@ -82,6 +88,10 @@ Installs:
 
 * [User naming](https://github.com/tomichj/user_naming) naming methods for user models
 * [User time zones](https://github.com/tomichj/user_time_zones) an easy way to work with multiple user time zones
+
+To run this generator:
+
+    rails generate buildo:users_services 
 
 Both gems generate migrations. Run `rails db:migrate` after this.
 
@@ -111,8 +121,8 @@ See all possible Heroku flags:
     heroku help create
 
 The heroku generator is largely taken from the suspenders project's heroku adapter. Suspenders
-does not offer heroku as a generator, and can only be invoked during initial app generation.
-You can run buildo's heroku generator any time.
+does not offer the heroku setup as a generator, and can only be invoked during initial app 
+generation. You can run buildo's heroku generator any time.
 
 
 ### All
@@ -120,7 +130,7 @@ You can run buildo's heroku generator any time.
 Runs the `app_base`, `scaffolding`, `auth`, and `user_services` generators.
 Run `rails db:migrate` after this.
 
-Note: Does __not__ run heroku.
+Note: The `all` generator does __not__ run heroku. Run that separately when you're ready.
 
 
 ## Issues
